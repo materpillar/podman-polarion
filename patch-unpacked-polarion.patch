@@ -1,0 +1,108 @@
+Only in container/Polarion.patched/bin: java-run.sh
+Only in container/Polarion.patched/bin: polarion.init
+Only in container/Polarion.patched/etc: config.sh
+Only in container/Polarion.patched/etc: polarion.properties
+diff --color -r -u container/Polarion/etc/polarion.properties.in container/Polarion.patched/etc/polarion.properties.in
+--- container/Polarion/etc/polarion.properties.in	2022-04-19 16:03:48.000000000 +0200
++++ container/Polarion.patched/etc/polarion.properties.in	2022-10-08 19:49:06.536981191 +0200
+@@ -176,7 +176,7 @@
+ createproject.default.useUserId=true
+ 
+ #Postgres database connection
+-com.polarion.platform.internalPG=polarion:@@PG_PSWD@@@localhost:@@PG_PORT@@
++com.polarion.platform.internalPG=polarion:polarion@localhost:5433
+ 
+ # The Preview Generator is used for generating previews of files like PDF, Word, Excel and other document types. 
+ # To enable it, define the following properties:
+diff --color -r -u container/Polarion/libinstall/default.sh container/Polarion.patched/libinstall/default.sh
+--- container/Polarion/libinstall/default.sh	2022-04-19 16:03:48.000000000 +0200
++++ container/Polarion.patched/libinstall/default.sh	2022-10-08 19:49:16.089077912 +0200
+@@ -15,7 +15,7 @@
+ export LC_CTYPE=en_US.UTF-8
+ 
+ # To set your own JDK_HOME, please modify and uncomment next variable:
+-#export JDK_HOME=[enter path here, removing the brackets]
++export JDK_HOME=/usr/lib/jvm/java-11-openjdk-11.0.16.1.1-1.el8_6.x86_64/
+ #
+ # Or add it automatically from env. by uncommenting next variable instead:
+ #export JDK_HOME=$JDK_HOME
+@@ -82,15 +82,15 @@
+ #export v_httpd_cfg=/etc/httpd
+   
+ # The running httpd user (repo owner)
+-#export v_web_user=
+-#export v_web_group=
++export v_web_user=apache
++export v_web_group=apache
+ 
+ # set maximum Java heap size for Polarion server (512 < m < 4096)
+ #export v_jserver_mem=
+ #export v_syslib=/usr/lib...
+ 
+ # FQDN host name (specify here if it can't be detected)
+-#v_hostname=
++v_hostname=localhost
+ 
+ # x86_64 or ix86
+ #v_machine=
+diff --color -r -u container/Polarion/libinstall/internal_install_redhat.sh container/Polarion.patched/libinstall/internal_install_redhat.sh
+--- container/Polarion/libinstall/internal_install_redhat.sh	2022-04-19 16:03:48.000000000 +0200
++++ container/Polarion.patched/libinstall/internal_install_redhat.sh	2022-10-08 16:07:38.194866501 +0200
+@@ -1,11 +1,11 @@
+ #!/bin/bash
+ 
+ function polarionService() {
+-	polarionServiceSystemdCheck $1
++	$POLARION_HOME/bin/polarion.init $1
+ }
+ 
+ function httpdService() {
+-	service httpd $1
++	httpd -k $1
+ }
+ 
+ function pgService(){
+diff --color -r -u container/Polarion/manual_install.sh container/Polarion.patched/manual_install.sh
+--- container/Polarion/manual_install.sh	2022-04-19 16:03:50.000000000 +0200
++++ container/Polarion.patched/manual_install.sh	2022-10-08 18:43:30.940240679 +0200
+@@ -16,9 +16,9 @@
+ 
+ 
+ # include common functions and variables
++. ./libinstall/helper_functions.sh
+ . ./libinstall/default.sh
+ . ./etc/functions.sh
+-. ./libinstall/helper_functions.sh
+ . ./libinstall/stage_functions.sh
+ . ./libinstall/third_functions.sh
+ 
+@@ -72,18 +72,18 @@
+ fi
+ 
+ ## Stage 77  - 
+-check_greeting ||
+-	showError "Internal error: check_greeting"
++#check_greeting ||
++#	showError "Internal error: check_greeting"
+ 
+ 
+-messCat << EOF
+-  
+- Now you need to initialize the repository with one of the following:
+-       '$POLARION_HOME/bin/polarion.init init' or '$POLARION_HOME/bin/polarion.init demo',
+- then start Polarion by running:
+-       '$POLARION_HOME/bin/polarion.init start'
+-  
+-EOF
++#messCat << EOF
++#  
++# Now you need to initialize the repository with one of the following:
++#       '$POLARION_HOME/bin/polarion.init init' or '$POLARION_HOME/bin/polarion.init demo',
++# then start Polarion by running:
++#       '$POLARION_HOME/bin/polarion.init start'
++#  
++#EOF
+ 
+ ## Stage 99. Finish
+ #finish_greeting
+Only in container/Polarion.patched/maven: settings.xml
