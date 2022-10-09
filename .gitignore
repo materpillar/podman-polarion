@@ -1,2 +1,3 @@
 Polarion*.zip
-container/Polarion/
+container/app/Polarion/
+container/app/Polarion.patched

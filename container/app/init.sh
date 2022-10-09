@@ -1,4 +1,4 @@
-su -c "pg_ctl -D /opt/polarion/data/postgres-data -l /opt/polarion/data/postgres-data/log.out -o \"-p 5433\" start" - postgres
+#su -c "pg_ctl -D /opt/polarion/data/postgres-data -l /opt/polarion/data/postgres-data/log.out -o \"-p 5433\" start" - postgres
 httpd -k start
 
 # Initalise subversion database without sample data if no subversion repository can be found.

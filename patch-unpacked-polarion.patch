@@ -1,22 +1,19 @@
-Only in container/Polarion.patched/bin: java-run.sh
-Only in container/Polarion.patched/bin: polarion.init
-Only in container/Polarion.patched/etc: config.sh
-Only in container/Polarion.patched/etc: polarion.properties
-diff --color -r -u container/Polarion/etc/polarion.properties.in container/Polarion.patched/etc/polarion.properties.in
---- container/Polarion/etc/polarion.properties.in	2022-04-19 16:03:48.000000000 +0200
-+++ container/Polarion.patched/etc/polarion.properties.in	2022-10-08 19:49:06.536981191 +0200
+diff --color -ur container/app/Polarion/etc/polarion.properties.in container/app/Polarion.patched/etc/polarion.properties.in
+--- container/app/Polarion/etc/polarion.properties.in	2022-04-19 16:03:48.000000000 +0200
++++ container/app/Polarion.patched/etc/polarion.properties.in	2022-10-09 11:46:35.510255713 +0200
 @@ -176,7 +176,7 @@
  createproject.default.useUserId=true
  
  #Postgres database connection
 -com.polarion.platform.internalPG=polarion:@@PG_PSWD@@@localhost:@@PG_PORT@@
-+com.polarion.platform.internalPG=polarion:polarion@localhost:5433
++com.polarion.platform.internalPG=polarion:polarion@localhost:5432
  
  # The Preview Generator is used for generating previews of files like PDF, Word, Excel and other document types. 
  # To enable it, define the following properties:
-diff --color -r -u container/Polarion/libinstall/default.sh container/Polarion.patched/libinstall/default.sh
---- container/Polarion/libinstall/default.sh	2022-04-19 16:03:48.000000000 +0200
-+++ container/Polarion.patched/libinstall/default.sh	2022-10-08 19:49:16.089077912 +0200
+Only in container/app/Polarion.patched/etc: polarion.properties.in.rej
+diff --color -ur container/app/Polarion/libinstall/default.sh container/app/Polarion.patched/libinstall/default.sh
+--- container/app/Polarion/libinstall/default.sh	2022-04-19 16:03:48.000000000 +0200
++++ container/app/Polarion.patched/libinstall/default.sh	2022-10-08 21:10:33.783852000 +0200
 @@ -15,7 +15,7 @@
  export LC_CTYPE=en_US.UTF-8
  
@@ -45,9 +42,9 @@ diff --color -r -u container/Polarion/libinstall/default.sh container/Polarion.p
  
  # x86_64 or ix86
  #v_machine=
-diff --color -r -u container/Polarion/libinstall/internal_install_redhat.sh container/Polarion.patched/libinstall/internal_install_redhat.sh
---- container/Polarion/libinstall/internal_install_redhat.sh	2022-04-19 16:03:48.000000000 +0200
-+++ container/Polarion.patched/libinstall/internal_install_redhat.sh	2022-10-08 16:07:38.194866501 +0200
+diff --color -ur container/app/Polarion/libinstall/internal_install_redhat.sh container/app/Polarion.patched/libinstall/internal_install_redhat.sh
+--- container/app/Polarion/libinstall/internal_install_redhat.sh	2022-04-19 16:03:48.000000000 +0200
++++ container/app/Polarion.patched/libinstall/internal_install_redhat.sh	2022-10-08 21:10:33.783852000 +0200
 @@ -1,11 +1,11 @@
  #!/bin/bash
  
@@ -62,9 +59,9 @@ diff --color -r -u container/Polarion/libinstall/internal_install_redhat.sh cont
  }
  
  function pgService(){
-diff --color -r -u container/Polarion/manual_install.sh container/Polarion.patched/manual_install.sh
---- container/Polarion/manual_install.sh	2022-04-19 16:03:50.000000000 +0200
-+++ container/Polarion.patched/manual_install.sh	2022-10-08 18:43:30.940240679 +0200
+diff --color -ur container/app/Polarion/manual_install.sh container/app/Polarion.patched/manual_install.sh
+--- container/app/Polarion/manual_install.sh	2022-04-19 16:03:50.000000000 +0200
++++ container/app/Polarion.patched/manual_install.sh	2022-10-08 21:10:33.783852000 +0200
 @@ -16,9 +16,9 @@
  
  
@@ -105,4 +102,3 @@ diff --color -r -u container/Polarion/manual_install.sh container/Polarion.patch
  
  ## Stage 99. Finish
  #finish_greeting
-Only in container/Polarion.patched/maven: settings.xml
