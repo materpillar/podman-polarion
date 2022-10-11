@@ -11,7 +11,11 @@ RUN dnf install -y \
     httpd subversion mod_dav_svn \
     postgresql postgresql-contrib\
     # server shouldn't be needed if it is running in a different container, but also manual installation will fail if we leave it out.
-    postgresql-server
+    postgresql-server \
+    # epel for supervisor package
+    epel-release && \
+    dnf install -y supervisor && \
+    dnf remove -y epel-release && dnf clean all
 
 # Set the right locales
 ENV LANG=en_US.UTF-8
@@ -33,6 +37,8 @@ RUN cat "install_manual.answers.txt" | ./manual_install.sh
 RUN chown polarion /opt/polarion/etc/polarion.properties
 RUN chmod u+rw /opt/polarion/etc/polarion.properties
 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 WORKDIR /workspace
 COPY init.sh /workspace/
-CMD /workspace/init.sh
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

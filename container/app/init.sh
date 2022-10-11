@@ -1,6 +1,4 @@
-
-# Start apache
-httpd -k start
+#!/bin/bash
 
 # Initalise subversion database without sample data if no subversion repository can be found.
 # We cannot do this in the containerfile as it would require to bind httpd to port 80
@@ -13,9 +11,9 @@ fi
 # a lot of other stuff is happening. I don't really get what that is for,
 # but the essential stuff seems to be this:
 
-su -c "/opt/polarion/bin/java-run.sh -server -Xms512m -Xmx512m -XX:+UseG1GC \
-    -XX:+HeapDumpOnOutOfMemoryError \
-    -XX:-OmitStackTraceInFastThrow \
-    -Dosgi.parentClassloader=ext  '-Dcom.polarion.propertyFile=/opt/polarion/etc/polarion.properties' '-Dcom.polarion.logs.main=/opt/polarion/data/logs/main' '-cp' '/opt/polarion/polarion/startup.jar' 'org.eclipse.core.launcher.Main' '-nosplash' '-data' '/opt/polarion/data/workspace' '-configuration' '/opt/polarion/data/workspace/.config'  2>&1 " polarion
+#su -c "/opt/polarion/bin/java-run.sh -server -Xms512m -Xmx512m -XX:+UseG1GC \
+#    -XX:+HeapDumpOnOutOfMemoryError \
+#    -XX:-OmitStackTraceInFastThrow \
+#    -Dosgi.parentClassloader=ext  '-Dcom.polarion.propertyFile=/opt/polarion/etc/polarion.properties' '-Dcom.polarion.logs.main=/opt/polarion/data/logs/main' '-cp' '/opt/polarion/polarion/startup.jar' 'org.eclipse.core.launcher.Main' '-nosplash' '-data' '/opt/polarion/data/workspace' '-configuration' '/opt/polarion/data/workspace/.config'  2>&1 " polarion
 
 # Todo: Some logic to handle container shutdown here...
