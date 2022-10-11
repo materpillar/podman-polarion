@@ -33,8 +33,6 @@ RUN cat "install_manual.answers.txt" | ./manual_install.sh
 RUN chown polarion /opt/polarion/etc/polarion.properties
 RUN chmod u+rw /opt/polarion/etc/polarion.properties
 
-USER root
-
 WORKDIR /workspace
 COPY init.sh /workspace/
 CMD /workspace/init.sh
